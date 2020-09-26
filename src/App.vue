@@ -34,14 +34,14 @@
             <div class="_48e360f8825a4f1e777dae4da035dc61-scss"></div>
             <div v-if="activeUser" class="_3a2dbd61921e0194803774bdcfb4a9f3-scss">
               <button class="_34098cfd13d48e2910679f35aea2c377-scss" type="button">
-                <figure class="_4f6cff0f3480e8d8cc3614e38afad63d-scss" title="Malcolm Bett"
+                <figure class="_4f6cff0f3480e8d8cc3614e38afad63d-scss" :title="userDisplayName"
                         style="width: 28px; height: 28px;"><img
                     draggable="false"
-                    src="https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1531643247156895&height=300&width=300&ext=1599848105&hash=AeTYuz6Y7QO84e_a"
-                    alt="Malcolm Bett"
+                    :src="userDisplayPhoto"
+                    :alt="userDisplayName"
                     class="_31deeacc1d30b0519bfefa0e970ef31d-scss _71b2b74d199d96b907da0c433c3c8da6-scss">
                 </figure>
-                <span class="_1cbbc2381b5bd2615676e5c522e5756c-scss f92d0df6ae4da826d7d532fbf608d469-scss">Malcolm Bett</span>
+                <span class="_1cbbc2381b5bd2615676e5c522e5756c-scss f92d0df6ae4da826d7d532fbf608d469-scss">{{ userDisplayName }}</span>
                 <span class="bcdaf2d12c2c21e06601f61efb5ee4c0-scss spoticon-chart-down-16"></span>
               </button>
             </div>
@@ -189,7 +189,7 @@
                     <div class="os-resize-observer-host observed">
                       <div class="os-resize-observer" style="left: 0px; right: auto;"></div>
                     </div>
-                    <div class="os-scrollbar os-scrollbar-vertical">
+                    <div class="os-scrollbar os-scrollbar-vertical" v-if="false">
                       <div class="os-scrollbar-track">
                         <div id="playlist_scollbar" class="os-scrollbar-handle"
                              style="transform: translate(0px, 0.778277px); height: 0.74842%;">
@@ -204,7 +204,7 @@
             <div>
               <div id="big_album_art" class="_2ca1340cef4913f1884c76a5b4946807-scss d6e5892a336f6ae43bf066f2245c81b1-scss">
                 <div draggable="true">
-                  <router-link to="/user/malcolmbett/collection" style="border: none;">
+                  <router-link :to="`/user/${UID}/collection`" style="border: none;">
                     <div class="cover-art shadow" style="width: 232px; height: 232px;">
                       <div>
                         <div class="icon">
@@ -239,7 +239,7 @@
                 <div id="small_album_art" class="now-playing" role="contentinfo">
                   <div class="_56e7eb66839e1315d2c7305d3f63ceb2-scss">
                     <div draggable="true">
-                      <router-link to="/user/malcolmbett/collection" style="border: none;">
+                      <router-link :to="`/user/${UID}/collection`" style="border: none;">
                         <div class="now-playing__cover-art">
                           <div class="cover-art shadow" style="width: 56px; height: 56px;">
                             <div>
@@ -350,7 +350,7 @@
                   </div>
                 </div>
               </div>
-              <div class="os-scrollbar os-scrollbar-vertical">
+              <div class="os-scrollbar os-scrollbar-vertical" v-if="false">
                 <div class="os-scrollbar-track">
                   <div id="main_scrollbar" class="os-scrollbar-handle" style="height: 8.05103%; transform: translate(0px, 31.9617px);"></div>
                 </div>
@@ -360,10 +360,11 @@
           </div>
         </div>
       </div>
-      <nav role="menu" tabindex="-1" class="react-contextmenu react-contextmenu--visible" id="playlistContextMenu"
+      <nav role="menu" tabindex="-1" class="react-contextmenu react-contextmenu--visible" id="mainContextMenu"
            style="position: fixed; opacity: 0; pointer-events: auto; top: 0; left: 0;">
         <div class="react-contextmenu-item" role="menuitem" tabindex="-1">Start Radio</div>
-        <div class="react-contextmenu-item" role="menuitem" tabindex="-1"><span class="">Remove from Your Library</span></div>
+        <div class="react-contextmenu-item" role="menuitem" tabindex="-1"><span>Remove from Your Library</span></div>
+        <div class="react-contextmenu-item" role="menuitem" tabindex="-1">Add to Playlist</div>
         <div class="react-contextmenu-item" role="menuitem" tabindex="-1">Copy Playlist link
           <textarea readonly="" tabindex="-1" style="width: 0; height: 0; opacity: 0;">https://open.spotify.com/playlist/37i9dQZEVXcXAZ2d76Gc4k?si=wo_4g4VyTGWFu_OJ0lvprw</textarea>
         </div>
@@ -409,13 +410,23 @@ export default {
   },
   methods: {
     authenticateUser: function () {
-      this.axiosGet(`${(location.origin).slice(0, -5)}:8383/get_access_token`, value => {
-        // if (value.data.isLoggedIn) {
-        this.activeUser = true;
-        this.access_token = value.data.access_token;
-        this.startApp();
-        // }
-      });
+      // this.axiosGet(`${location.origin}/get_access_token`, value => {
+      this.axiosGet(`https://spotauthtoken.herokuapp.com/get_access_token`, value => {
+            if (value.status === 200) {
+              if (value.data !== "") {
+                console.log(value.data);
+                if (value.data.isLoggedIn) {
+                  this.activeUser = true;
+                  this.access_token = value.data.access_token;
+                  this.startApp();
+                } else {
+                  this.activeUser = false;
+                  this.access_token = value.data.accessToken;
+                }
+              }
+            }
+          }
+      );
     },
     startApp: function () {
       // this.scrollFix("playlist_links");
@@ -502,7 +513,8 @@ export default {
       this.axiosGet("https://api.spotify.com/v1/me/player", response => {
         // let time = response.data.item.duration_ms - response.data.progress_ms;
         if (response.status === 200) {
-          this.updatePlayingDevice(response.data.device);
+          this.deviceName = response.data.device.name;
+          this.isPlayingHere = response.data.device.id === this.deviceId;
           this.updateMainUi(response.data.item);
         } else if (response.status === 204) {
           console.log("Not Playing Anywhere at all!!!");
@@ -529,11 +541,12 @@ export default {
       }
       this.trackDuration = this.milliToReadTime(data.duration_ms);
     },
-    updatePlayingDevice: function (data) {
-      this.deviceName = data.name;
-      this.isPlayingHere = data.id === this.deviceId;
-    },
     getUser: function () {
+      this.axiosGet('https://api.spotify.com/v1/me', value => {
+        this.userDisplayName = value.data.display_name;
+        this.userDisplayPhoto = value.data.images[0].url;
+        console.log(value.data);
+      });
     },
     progressBarHover: function (value) {
       switch (value.type) {
@@ -595,7 +608,6 @@ export default {
   data() {
     return {
       access_token: '',
-      refresh_token: 'AQDzy2x894YIFMoCfm8f5ISkuNW6ySbtvWsZ5gdldy1nUMb2U3nGPktjnPS-05LFrzYsx5pYgSUWrYPpabGsr3XX4abY3aN8dbg4iaLI_JGuc4nKLEx5wSGYSBq_CC9bGGw',
       tokenData: {},
       activeUser: false,
       playlistData: [],
@@ -603,6 +615,9 @@ export default {
       state: null,
       currentPlayerState: null,
       isPlayingHere: true,
+      userDisplayName: '',
+      userDisplayPhoto: '',
+      UID: '',
       deviceName: '',
       deviceId: '',
       trackAlbumArt: '',

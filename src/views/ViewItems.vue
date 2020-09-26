@@ -3,22 +3,23 @@
   <section v-bind:class="{
     '_7e0ce830f3504054d8b73c0fd1ddc1d5-scss': isAlbum,
     '_9fe8a0caa4f26833e73e09018d2e33fd-scss': isTracks || isPlaylist}">
-    <div class="_4c3b6e4e88112fc8ef88512cbe7521ed-scss">
-      <div class="_1066d722d4c5fe45076daa358de0a969-scss"
+    <div class="b9cf8ca0c14080b2bd5ea7b219e3939b-scss">
+      <div class="_6f1bb16d690aec58cb10e82de1ac2410-scss"
            v-bind:style="{'background-color':`${contentImage.includes('mosaic') ? 'rgb(83, 83, 83)' : contentColor}`}"></div>
-      <div class="_1066d722d4c5fe45076daa358de0a969-scss _898a0ac18270b333d95d8402650e2c46-scss"></div>
+      <div class="_6f1bb16d690aec58cb10e82de1ac2410-scss _4e5d4ac7abe19f92074b5861b22fa8a4-scss"></div>
       <div></div>
-      <div class="e606f708ec76d36e4cf363817b6b2ffd-scss" draggable="true">
-        <img draggable="false" class="_64acb0e26fe0d9dff68a0e9725b2a920-scss _4c838ef3d2b6da1a61669046bbfae3d1-scss"
+      <div class="_580b6fafecf9720b3ac1e6ac671839ff-scss" draggable="true">
+        <img draggable="false" class="_31deeacc1d30b0519bfefa0e970ef31d-scss _11b29b5a5f3bcae347f832a4278b28b8-scss"
              srcset="https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png 150w, https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png 300w"
              src="https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png"
              sizes="(min-width: 1280px) 232px, 192px" v-if="isTracks" alt="Liked Songs">
-        <img draggable="false" class="_64acb0e26fe0d9dff68a0e9725b2a920-scss _4c838ef3d2b6da1a61669046bbfae3d1-scss"
+        <img draggable="false" class="_31deeacc1d30b0519bfefa0e970ef31d-scss _11b29b5a5f3bcae347f832a4278b28b8-scss"
              :srcset="`${contentImage} 150w, ${contentImage} 300w`"
              :src=contentImage
              sizes="(min-width: 1280px) 232px, 192px" v-if="!isTracks" :alt="title">
       </div>
-      <div class="faffb409617fd7cf35017fde898cf860-scss">
+<!--      css continue here-->
+      <div class="_7313e48b8f1c8a11ff2eff89b67ff69a-scss">
         <h2 class="bab4e7e0003c98b59e58b925d59840f8-scss d043401fc6c1247d9bab1d03fb554b48-scss b4b36569a9650c59003ec88a4551c3ea-scss _7fccf2efe6726e6281233b60b6d78f1b-scss">
           {{ contentType }}</h2>
         <span dir="auto" class="dc48565bba15548872ea84c715a5fee2-scss">
@@ -51,8 +52,7 @@
           </svg>
         </button>
         <div class="react-contextmenu-wrapper">
-          <button type="button" class="_605821ce181f6de6632eabd6a46377fb-scss" title="More"
-                  @click="myContextMenu('playlistContextMenu', $event)">
+          <button type="button" class="_605821ce181f6de6632eabd6a46377fb-scss" title="More" @click="myContextMenu('mainContextMenu', $event)">
             <div class="spoticon-ellipsis-32"></div>
           </button>
         </div>
