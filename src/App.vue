@@ -4,7 +4,7 @@
       <div></div>
       <div class="Root__top-container">
         <div class="Root__top-bar">
-          <header class="b5b01e376bfe3156c865cba3909f11c3-scss">
+          <header class="b5b01e376bfe3156c865cba3909f11c3-scss" v-bind:class="{'_3a86f45d81725794b5ca3eee9de8d462-scss': !activeUser}">
             <div class="_21f29c9d16bf3b2adbeb2fe04bdcbe8b-scss"
                  style="background-color: rgb(18, 18, 18); opacity: 0;">
               <div class="e082d93e1995fad3363fcbc6ae888189-scss"></div>
@@ -202,7 +202,15 @@
               </div>
             </div>
             <div>
-              <div id="big_album_art" class="_2ca1340cef4913f1884c76a5b4946807-scss d6e5892a336f6ae43bf066f2245c81b1-scss">
+              <div class="_6bf80b7687920c195942190a0968b56c-scss" v-if="!activeUser">
+                <a draggable="false" href="https://www.spotify.com/legal/cookies-policy/" target="_blank" rel="noopener">
+                  <span class="e80fc2e59729be32410c909c47ef87a3-scss">Cookies</span>
+                </a>
+                <a draggable="false" href="https://www.spotify.com/legal/privacy-policy/" target="_blank" rel="noopener">
+                  <span class="e80fc2e59729be32410c909c47ef87a3-scss">Privacy</span>
+                </a>
+              </div>
+              <div id="big_album_art" v-if="activeUser" class="_2ca1340cef4913f1884c76a5b4946807-scss d6e5892a336f6ae43bf066f2245c81b1-scss">
                 <div draggable="true">
                   <router-link :to="`/user/${UID}/collection`" style="border: none;">
                     <div class="cover-art shadow" style="width: 232px; height: 232px;">
@@ -232,7 +240,7 @@
             </div>
           </nav>
         </div>
-        <div class="Root__now-playing-bar">
+        <div class="Root__now-playing-bar" v-if="activeUser">
           <footer class="now-playing-bar-container">
             <div class="now-playing-bar" role="complementary">
               <div class="now-playing-bar__left">
@@ -409,28 +417,7 @@ export default {
     }
   },
   methods: {
-    authenticateUser: function () {
-      // this.axiosGet(`${location.origin}/get_access_token`, value => {
-      this.axiosGet(`https://spotauthtoken.herokuapp.com/get_access_token`, value => {
-            if (value.status === 200) {
-              if (value.data !== "") {
-                console.log(value.data);
-                if (value.data.isLoggedIn) {
-                  this.activeUser = true;
-                  this.access_token = value.data.access_token;
-                  this.startApp();
-                } else {
-                  this.activeUser = false;
-                  this.access_token = value.data.accessToken;
-                }
-              }
-            }
-          }
-      );
-    },
     startApp: function () {
-      // this.scrollFix("playlist_links");
-      // this.scrollFix("content_main");
       this.spotifyInit();
       this.getUser();
       this.requestUserPlaylist('https://api.spotify.com/v1/me/playlists');
@@ -490,6 +477,7 @@ export default {
         });
         player.connect().then(console.log("Player Connected"));
         player.getCurrentState().then(state => {
+          // check this
           if (!state && this.access_token) {
             this.currentState();
             console.log("no state yes access: " + state);
@@ -600,6 +588,12 @@ export default {
       let minutes = Math.floor(durationRawMinutes);
       let seconds = Math.floor((durationRawMinutes - minutes) * 60);
       return `${minutes}:${("0" + seconds).slice(-2)}`;
+    },
+    uiElements: function () {
+      // this.scrollFix("playlist_links");
+      // this.scrollFix("content_main");
+      this.addClassLink(document.getElementById("nav_links"), "A", "de74c1f13a9a8150dfe21bf59c967111-scss");
+      this.addClassLink(document.getElementById("playlist_links"), "A", "RootlistItem__link--is-highlighted");
     }
   },
   components: {
@@ -630,18 +624,22 @@ export default {
     }
   },
   mounted() {
-    this.albumViewListener(this.expandAlbumArt);
+    this.uiElements();
+    this.activeUser ? this.albumViewListener(this.expandAlbumArt) : null;
   },
   created() {
-    if (this.activeUser) {
-      this.startApp();
-    } else {
-      this.authenticateUser();
-    }
+    // this.axiosGet(`${location.origin}/get_access_token`, value => {
+    this.axiosGet(`https://spotauthtoken.herokuapp.com/get_access_token`, value => {
+          if (value.status === 200) {
+            this.activeUser = value.data.isLoggedIn || !value.data.isAnonymous;
+            this.access_token = value.data.access_token || value.data.accessToken;
+            this.activeUser ? this.startApp() : null;
+          }
+        }
+    );
   },
   updated() {
-    this.addClassLink(document.getElementById("nav_links"), "A", "de74c1f13a9a8150dfe21bf59c967111-scss");
-    this.addClassLink(document.getElementById("playlist_links"), "A", "RootlistItem__link--is-highlighted");
+    this.uiElements();
   },
   beforeUpdate() {
     this.$cookies.set("expandAlbumArt", this.expandAlbumArt);
