@@ -1,21 +1,22 @@
 <template>
   <div id="main">
-    <div class="Root">
-      <div></div>
+    <div data-testid="root" class="Root">
       <div class="Root__top-container">
         <div class="Root__top-bar">
-          <header class="b5b01e376bfe3156c865cba3909f11c3-scss" v-bind:class="{'_3a86f45d81725794b5ca3eee9de8d462-scss': !activeUser}">
-            <div class="_21f29c9d16bf3b2adbeb2fe04bdcbe8b-scss"
+          <header
+              aria-label="Top bar and user menu"
+              class="b00fbb9732b9fe65ded1ba887be5aef9-scss" v-bind:class="{'_1c6be47da780c118361aaad513d66032-scss': !activeUser}">
+            <div class="_7f29d1db930e7882d0ee6099f36e3bc7-scss"
                  style="background-color: rgb(18, 18, 18); opacity: 0;">
-              <div class="e082d93e1995fad3363fcbc6ae888189-scss"></div>
+              <div class="_2411182f42f92a221e29c993de036981-scss"></div>
             </div>
-            <div style="display: none" class="_26d9e31a05dd5fba3afe1b281ae2cf9e-scss">
+            <div style="display: none" class="bf1bfc9796b0e84ceb631046c90df713-scss">
               <button id="go_back" disabled=""
-                      class="_66febc2caff37c822a831232b6e73171-scss _7d846137186e6bfd0724a32565d216cb-scss"
+                      class="_8780d098bf4fa4b72c62f7f4c869e817-scss fcae410939337be1f28cb50fe3d0dcb3-scss"
                       title="Go back">
                 <svg role="img" focusable="false" height="24" width="24"
                      viewBox="0 0 24 24"
-                     class="Svg-sc-1usfroi-0 jNmUis _6be6d9f3103325b95e6d4c0f6b10b783-scss">
+                     class="Svg-sc-1usfroi-0 jUuLJy _6fe5d5efc9b4a07d5c424071ac7cdacb-scss">
                   <polyline style="stroke: currentcolor; vector-effect: non-scaling-stroke;" points="16 4 7 12 16 20" fill="none"
                             stroke="#181818"></polyline>
                 </svg>
@@ -31,7 +32,23 @@
                 </svg>
               </button>
             </div>
-            <div class="_48e360f8825a4f1e777dae4da035dc61-scss"></div>
+            <div class="_4555ba2c05062f5eccc7f1c761fe0c7d-scss">
+              <div class="_233cba0ebe7615236e86592034108e77-scss">
+                <nav class="a339f5873501630360d9da0c7938f28b-scss _0e8005074dbda3fac5e3e0351fa82d97-scss">
+                  <ul class="_50d97b6270ce5e1b70d300348bc6b80d-scss">
+                    <li class="_0787ecf44d56591be72b1f2c0e2f2320-scss">
+                      <a aria-current="page" class="_43e978b8fbef3b1a5fc86ea29e51a0fd-scss a4bc298d40e9660cd25cd3ac1a7f9c49-scss" draggable="false"
+                         href="/collection/playlists">
+                        <span class="_9642f084eaa7faec9f8f003145b6c289-scss">Playlists</span>
+                      </a>
+                    </li>
+                    <li class="_0787ecf44d56591be72b1f2c0e2f2320-scss"></li>
+                    <li class="_0787ecf44d56591be72b1f2c0e2f2320-scss"></li>
+                    <li class="_0787ecf44d56591be72b1f2c0e2f2320-scss"></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
             <div v-if="activeUser" class="_3a2dbd61921e0194803774bdcfb4a9f3-scss">
               <button class="_34098cfd13d48e2910679f35aea2c377-scss" type="button">
                 <figure class="_4f6cff0f3480e8d8cc3614e38afad63d-scss" :title="userDisplayName"
@@ -369,7 +386,7 @@
         </div>
       </div>
       <nav role="menu" tabindex="-1" class="react-contextmenu react-contextmenu--visible" id="mainContextMenu"
-           style="position: fixed; opacity: 0; pointer-events: auto; top: 0; left: 0;">
+           style="position: fixed; opacity: 0; pointer-events: auto; top: 0; left: 0; display: none">
         <div class="react-contextmenu-item" role="menuitem" tabindex="-1">Start Radio</div>
         <div class="react-contextmenu-item" role="menuitem" tabindex="-1"><span>Remove from Your Library</span></div>
         <div class="react-contextmenu-item" role="menuitem" tabindex="-1">Add to Playlist</div>
@@ -379,7 +396,7 @@
         <div class="react-contextmenu-item" role="menuitem" tabindex="-1">Open in Desktop app</div>
       </nav>
       <nav role="menu" tabindex="-1" class="react-contextmenu react-contextmenu--visible" id="trackContextMenu"
-           style="position:fixed; opacity: 0; pointer-events: auto; top: 0; left: 0;">
+           style="position:fixed; opacity: 0; pointer-events: auto; top: 0; left: 0; display: none">
         <div class="react-contextmenu-item" role="menuitem" tabindex="-1" aria-disabled="false">Start Radio</div>
         <div class="react-contextmenu-item" role="menuitem" tabindex="-1" aria-disabled="false">Save to your Liked Songs</div>
         <div class="react-contextmenu-item" role="menuitem" tabindex="-1" aria-disabled="false">Add to Queue</div>
@@ -418,9 +435,16 @@ export default {
   },
   methods: {
     startApp: function () {
+      let scriptTag = document.createElement('script');
+      scriptTag.setAttribute('defer', 'defer');
+      scriptTag.setAttribute('src', 'https://sdk.scdn.co/spotify-player.js');
+      document.head.append(scriptTag);
       this.spotifyInit();
       this.getUser();
       this.requestUserPlaylist('https://api.spotify.com/v1/me/playlists');
+    },
+    getGlobalData: () => {
+
     },
     spotifyInit: function () {
       window.onSpotifyWebPlaybackSDKReady = () => {
@@ -494,9 +518,6 @@ export default {
       }
       return list.join(", ");
     },
-    scrollFix: function (scrollContainer) {
-      console.log(scrollContainer);
-    },
     currentState: function () {
       this.axiosGet("https://api.spotify.com/v1/me/player", response => {
         // let time = response.data.item.duration_ms - response.data.progress_ms;
@@ -533,7 +554,7 @@ export default {
       this.axiosGet('https://api.spotify.com/v1/me', value => {
         this.userDisplayName = value.data.display_name;
         this.userDisplayPhoto = value.data.images[0].url;
-        console.log(value.data);
+        // console.log(value.data);
       });
     },
     progressBarHover: function (value) {
@@ -566,7 +587,7 @@ export default {
     },
     addClassLink: function (element, queryTag, className) {
       element.querySelectorAll(queryTag).forEach(node => {
-        if (node.getAttribute("href") === this.$route.path) {
+        if (node.getAttribute("href").split("/")[1] === this.$route.path.split("/")[1]) {
           node.classList.add(className);
         }
       });
@@ -590,8 +611,6 @@ export default {
       return `${minutes}:${("0" + seconds).slice(-2)}`;
     },
     uiElements: function () {
-      // this.scrollFix("playlist_links");
-      // this.scrollFix("content_main");
       this.addClassLink(document.getElementById("nav_links"), "A", "de74c1f13a9a8150dfe21bf59c967111-scss");
       this.addClassLink(document.getElementById("playlist_links"), "A", "RootlistItem__link--is-highlighted");
     }
@@ -628,12 +647,13 @@ export default {
     this.activeUser ? this.albumViewListener(this.expandAlbumArt) : null;
   },
   created() {
+    // this.axiosGet(`https://open.spotify.com/get_access_token`, value => {
     // this.axiosGet(`${location.origin}/get_access_token`, value => {
     this.axiosGet(`https://spotauthtoken.herokuapp.com/get_access_token`, value => {
           if (value.status === 200) {
             this.activeUser = value.data.isLoggedIn || !value.data.isAnonymous;
             this.access_token = value.data.access_token || value.data.accessToken;
-            this.activeUser ? this.startApp() : null;
+            this.activeUser ? this.startApp() : this.getGlobalData();
           }
         }
     );
