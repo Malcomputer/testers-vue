@@ -16,7 +16,7 @@ export default new Router({
 		{path: '/collection', redirect: '/collection/playlists'},
 		{path: '/collection/tracks', component: ViewItems},
 		{path: '/collection/:option', component: Collections},
-		{path: '/playlist/:item', component: ViewItems},
-		{path: '/album/:item', component: ViewItems}
+		// {path: '/playlist/:item', component: ViewItems},
+		// {path: '/album/:item', component: ViewItems}
 	]
 })

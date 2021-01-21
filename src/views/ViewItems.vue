@@ -256,6 +256,7 @@ export default {
     }
   },
   updated() {
+    console.log('hi');
     if (this.updateUiOnce !== location.pathname.split("/")[2]) {
       this.updateUiOnce = location.pathname.split("/")[2];
       this.updateLink();
