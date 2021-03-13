@@ -219,7 +219,7 @@ export default {
       }
     },
     axiosGet: function (url, callback) {
-      this.$axios.get(`https://api.spotify.com/v1${url}`, {headers: {'Authorization': `Bearer ${this.$parent.access_token}`}}).then(callback);
+      this.$parent.$axios.get(`https://api.spotify.com/v1${url}`, {headers: {'Authorization': `Bearer ${this.$parent.access_token}`}}).then(callback);
     },
     updateItemUi: function (data) {
       console.log(data);
