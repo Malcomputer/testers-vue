@@ -9,18 +9,22 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "color-thief": "^2.2.5",
     "colorthief": "^2.3.2",
     "core-js": "^3.8.2",
     "fast-average-color": "^6.3.0",
-    "vue": "^2.6.11",
+    "vue": "^3.2.13",
     "vue-cookies": "^1.7.3",
-    "vue-router": "^3.4.9"
+    "vue-router": "^4.0.3"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.10",
-    "@vue/cli-service": "~4.5.10",
-    "vue-template-compiler": "^2.6.11"
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.18.0",
+    "eslint-plugin-vue": "^7.4.1",
+    "vue-template-compiler": "^2.6.11",
+    "@vue/cli-plugin-router": "~5.0.0"
   },
   "eslintConfig": {
     "root": true,

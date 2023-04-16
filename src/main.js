@@ -1,7 +1,7 @@
-import {createApp} from 'vue'
-import App from './App.vue'
-import router from './router'
-import VueCookies from 'vue-cookies'
+import VueCookies from 'vue-cookies';
+import {createApp} from 'vue';
+import router from './router';
+import App from './App.vue';
 // import './css/reset.css';
 // import './css/style.css';
 import './js/domElement.js';

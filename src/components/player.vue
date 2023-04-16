@@ -9,6 +9,7 @@ export default {
   name: 'Player',
   created() {
     window.onSpotifyWebPlaybackSDKReady = () => {
+      // eslint-disable-next-line no-undef
       const player = new Spotify.Player({
         name: document.title,
         getOAuthToken: callback => callback(this.$parent.access_token)

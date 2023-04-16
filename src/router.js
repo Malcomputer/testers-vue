@@ -2,8 +2,8 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 import home from './views/Home'
 import Search from './views/Search'
-import Collections from './views/Collections'
 import ViewItems from './views/ViewItems'
+import Collections from './views/Collections'
 
 export default createRouter({
 	history: createWebHistory(process.env.BASE_URL),
