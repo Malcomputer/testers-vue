@@ -242,7 +242,7 @@ export default {
   },
   created() {
     // this.axiosGet(`${location.origin}/get_access_token`, value => {
-    this.axiosGet(`https://spotauthtoken.herokuapp.com/get_access_token`, value => {
+    this.axiosGet(`http://localhost:8383/get_access_token`, value => {
       if (value.status === 200) {
         this.activeUser = value.data.isLoggedIn || false;
         this.access_token = value.data.access_token || value.data.accessToken;
