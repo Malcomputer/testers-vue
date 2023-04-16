@@ -1,14 +1,12 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 import home from './views/Home'
 import Search from './views/Search'
 import Collections from './views/Collections'
 import ViewItems from './views/ViewItems'
 
-Vue.use(Router);
-
-export default new Router({
+export default createRouter({
+	history: createWebHistory(process.env.BASE_URL),
 	mode: 'history',
 	routes: [
 		{path: '/', component: home},

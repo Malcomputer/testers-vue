@@ -75,6 +75,8 @@
 <script>
 import Player from './components/player.vue'
 
+import axios from "axios";
+
 export default {
   name: 'App',
   components: {
@@ -241,10 +243,11 @@ export default {
     // this.activeUser ? this.albumViewListener(this.expandAlbumArt) : null;
   },
   created() {
+    this.$axios = axios;
     // this.axiosGet(`${location.origin}/get_access_token`, value => {
     this.axiosGet(`http://localhost:8383/get_access_token`, value => {
       if (value.status === 200) {
-        this.activeUser = value.data.isLoggedIn || false;
+        this.activeUser = value.data.isLoggedIn || !value.data.isAnonymous;
         this.access_token = value.data.access_token || value.data.accessToken;
         this.activeUser ? this.startApp() : this.getGlobalData();
       }
