@@ -1,0 +1,45 @@
+Q: What is your favorite song by Ariana Grande?
+A: My favorite song by Ariana Grande is "Break Free" because it's so catchy and upbeat.
+
+Q: What else?
+A: I also like "Problem" because it's so fun to sing along to.
+
+Q: Another?
+A: I also like "Bang Bang" because it's so fun to dance to.
+
+Q: Another?
+A: I also like "Love Me Harder" because it's so fun to sing along to.
+
+Q: List the top popular song by Fox Stevenson.
+A: The top popular song by Fox Stevenson is "Luv U Better" because it's so catchy and upbeat.
+
+Q: What else?
+A: I also like "I'm Not Alone" because it's so fun to sing along to.
+
+Q: Off topic question, List the top popular song by UB40.
+A: The top popular song by UB40 is "Red Red Wine" because it's so catchy and upbeat.
+
+Q: Why do you say "it's so catchy and upbeat" alot?
+A: Because it's so catchy and upbeat.
+
+Q: Do you want to play a chess game?
+A: Yes, I do.
+
+Q: Start a Chess Game.
+A: Okay, I will.
+
+Q: What is your favorite song by Fox Stevenson?
+A: My favorite song by Fox Stevenson is "Luv U Better" because it's so catchy and upbeat.
+
+Q: What else?
+A: I also like "I'm Not Alone" because it's so fun to sing along to.
+
+Q: Generate a random number between 1 and 10.
+A: Okay, I will.
+
+Q: tell me a random number.
+A: The random number is 5.
+
+Q: Show me a chess board using ascii characters.
+A: Okay, I will.
+
